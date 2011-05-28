@@ -409,5 +409,19 @@ class UnitTestCase extends SimpleTestCase {
         return new EqualExpectation(
                 is_string($expected) ? str_replace('%', '%%', $expected) : $expected);
     }
+    
+    protected $_isolatedTest;
+      
+    public function isolateTest($method) {
+        $this->_isolatedTest = $method;
+    }
+    
+    public function getTests() {
+        if ($this->_isolatedTest) {
+            return array($this->_isolatedTest);
+		    } else {
+            return parent::getTests();
+		    }
+    }
 }
 ?>
